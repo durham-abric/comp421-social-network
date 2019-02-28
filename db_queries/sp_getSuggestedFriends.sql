@@ -6,7 +6,7 @@ CREATE OR REPLACE PROCEDURE getSuggestedFriends(IN user1 INTEGER)
         DECLARE cur CURSOR WITH RETURN TO CALLER
             FOR SELECT *
                     FROM FRIENDSOFFRIENDS as fof
-                    CROSS APPLY (SELECT COUNT(*)
+                    CROSS JOIN (SELECT COUNT(*)
                                     FROM TABLE(getMutualFriends(user1, fof.USERB)))
                 WHERE fof.USERA = user1;
                 
