@@ -2,8 +2,7 @@ CREATE OR REPLACE PROCEDURE getMutualFriends(IN user1 INTEGER, IN user2 INTEGER)
     LANGUAGE SQL
     BEGIN
         DECLARE cur CURSOR WITH RETURN TO CALLER
-            FOR
-            SELECT DISTINCT(USERB) 
+            FOR SELECT DISTINCT(USERB) 
                     FROM BIDIRECTIONALFRIENDS AS bdf1
                 WHERE EXISTS(SELECT * 
                                 FROM BIDIRECTIONALFRIENDS as bdf2 
