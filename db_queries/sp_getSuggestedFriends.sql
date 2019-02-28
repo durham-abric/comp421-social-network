@@ -15,9 +15,9 @@ CREATE OR REPLACE PROCEDURE getSuggestedFriends(IN user1 INTEGER)
         WHERE USERA = user1;
 
         UPDATE TempSuggested
-        SET mutualFriends
-        SELECT COUNT(*)
-            FROM TABLE(getMutualFriends(user1, suggestion));
+        SET mutualFriends = 
+            (SELECT COUNT(*)
+                FROM TABLE(getMutualFriends(user1, suggestion)));
 
         DECLARE cur CURSOR WITH RETURN TO CALLER
             FOR SELECT * 
