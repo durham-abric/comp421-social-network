@@ -5,7 +5,7 @@ CREATE OR REPLACE PROCEDURE getSuggestedFriends(IN user1 INTEGER)
 
         CREATE Table TempSuggested(
             suggestion INTEGER UNIQUE NOT NULL PRIMARY KEY,
-            mutualFriends INTEGER NOT NULL DEFAULT 0,
+            mutualFriends BIGINT NOT NULL DEFAULT 0,
             FOREIGN KEY (suggestion) REFERENCES User(ownID)
         );
 
@@ -15,8 +15,9 @@ CREATE OR REPLACE PROCEDURE getSuggestedFriends(IN user1 INTEGER)
         WHERE USERA = user1;
 
         INSERT INTO TempSuggested(mutualFriends)
-        SELECT COUNT(CALL sp_getMutualFriends(user1, ts.suggestion))
-            FROM TempSuggested as ts
+        SELECT COUNT(total)
+            FROM (CALL getMutualFriends(user1, ts.suggestion)) as total
+            JOIN TempSuggested as ts
         WHERE suggestion = ts.suggestion;
 
         SELECT * 
@@ -24,5 +25,5 @@ CREATE OR REPLACE PROCEDURE getSuggestedFriends(IN user1 INTEGER)
         ORDER BY mutualFriends DESC;
 
         DROP TABLE IF EXISTS TempSuggested;
-        
+
     END@

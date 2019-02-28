@@ -1,6 +1,5 @@
 CREATE OR REPLACE PROCEDURE getMutualFriends( IN user1 INTEGER, 
-                                              IN user2 INTEGER,
-                                              OUT total INTEGER)
+                                              IN user2 INTEGER)
     LANGUAGE SQL
 
     BEGIN
@@ -15,7 +14,5 @@ CREATE OR REPLACE PROCEDURE getMutualFriends( IN user1 INTEGER,
                                 bdf1.USERB = bdf2.USERB);
 
         OPEN cur;
-
-        SET total = CURSOR_ROWCOUNT(cur);
 
     END@
