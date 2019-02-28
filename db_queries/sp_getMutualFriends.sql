@@ -1,3 +1,5 @@
+DELIMITER @
+
 CREATE OR REPLACE PROCEDURE getMutualFriends( IN user1 INTEGER, 
                                               IN user2 INTEGER)
     LANGUAGE SQL
@@ -16,3 +18,5 @@ CREATE OR REPLACE PROCEDURE getMutualFriends( IN user1 INTEGER,
         OPEN cur;
 
     END@
+
+DELIMITER ;
