@@ -4,12 +4,12 @@ CREATE OR REPLACE PROCEDURE getSuggestedFriends(IN user1 INTEGER)
     BEGIN ATOMIC
 
         DECLARE cur CURSOR WITH RETURN TO CALLER
-            FOR SELECT fof.USERB
+            FOR SELECT *
                     FROM FRIENDSOFFRIENDS as fof
-                WHERE fof.USERA = user1
-                ORDER BY (SELECT COUNT(*)
-                            FROM TABLE(getMutualFriends(user1, fof.USERB)));
-       
+                    CROSS APPLY (SELECT COUNT(*)
+                                    FROM TABLE(getMutualFriends(user1, fof.USERB)))
+                WHERE fof.USERA = user1;
+                
         OPEN cur;
 
     END@
