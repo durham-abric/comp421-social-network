@@ -7,9 +7,9 @@ CREATE OR REPLACE PROCEDURE getSuggestedFriends(IN user1 INTEGER)
             FOR SELECT USERB
                     FROM (SELECT * 
                             FROM FRIENDSOFFRIENDS as fof
-                            WHERE USERA = user1
-                            ORDER BY (SELECT COUNT(*)
-                                        FROM TABLE(getMutualFriends(USERA, USERB))));
+                            WHERE fof.USERA = user1) AS sug
+                ORDER BY (SELECT COUNT(*)
+                            FROM TABLE(getMutualFriends(sug.USERA, sug.USERB)));
                 
         OPEN cur;
 
