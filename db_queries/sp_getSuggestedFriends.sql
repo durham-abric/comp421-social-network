@@ -26,6 +26,6 @@ CREATE OR REPLACE PROCEDURE getSuggestedFriends(IN user1 INTEGER)
 
         OPEN cur;
 
-        DROP TABLE IF EXISTS TempSuggested;
+        DROP TABLE TempSuggested;
 
     END P1@
