@@ -1,6 +1,8 @@
 CREATE OR REPLACE PROCEDURE getSuggestedFriends(IN user1 INTEGER)
     LANGUAGE SQL
+
     BEGIN
+
         CREATE Table TempSuggested(
             suggestion INTEGER UNIQUE NOT NULL PRIMARY KEY,
             mutualFriends INTEGER NOT NULL DEFAULT 0,
@@ -22,4 +24,5 @@ CREATE OR REPLACE PROCEDURE getSuggestedFriends(IN user1 INTEGER)
         ORDER BY mutualFriends DESC;
 
         DROP TABLE IF EXISTS TempSuggested;
+        
     END@
