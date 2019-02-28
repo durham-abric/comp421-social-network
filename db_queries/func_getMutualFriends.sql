@@ -1,5 +1,3 @@
-DELIMITER @
-
 CREATE OR REPLACE FUNCTION getMutualFriends(user1 INTEGER, 
                                             user2 INTEGER)
     RETURNS TABLE(mutualFriend INTEGER)
@@ -16,5 +14,3 @@ CREATE OR REPLACE FUNCTION getMutualFriends(user1 INTEGER,
                             bdf2.USERA = user2 AND
                             bdf1.USERB = bdf2.USERB);
     END@
-
-DELIMITER ;

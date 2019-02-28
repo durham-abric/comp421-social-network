@@ -1,5 +1,3 @@
-DELIMITER @
-
 CREATE OR REPLACE PROCEDURE getSuggestedFriends(IN user1 INTEGER)
     LANGUAGE SQL
 
@@ -14,5 +12,3 @@ CREATE OR REPLACE PROCEDURE getSuggestedFriends(IN user1 INTEGER)
         OPEN cur;
 
     END@
-
-DELIMITER ;
