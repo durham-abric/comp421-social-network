@@ -1,0 +1,105 @@
+(c) Copyright IBM Corporation 1993,2007
+Command Line Processor for DB2 Client 10.5.3
+
+You can issue database manager commands and SQL statements from the command 
+prompt. For example:
+    db2 => connect to sample
+    db2 => bind sample.bnd
+
+For general help, type: ?.
+For command help, type: ? command, where command can be
+the first few keywords of a database manager command. For example:
+ ? CATALOG DATABASE for help on the CATALOG DATABASE command
+ ? CATALOG          for help on all of the CATALOG commands.
+
+To exit db2 interactive mode, type QUIT at the command prompt. Outside 
+interactive mode, all commands must be prefixed with 'db2'.
+To list the current command option settings, type LIST COMMAND OPTIONS.
+
+For more detailed help, refer to the Online Reference Manual.
+
+db2 => DROP TABLE PageOwner
+DB20000I  The SQL command completed successfully.
+
+db2 => DROP TABLE User
+DB20000I  The SQL command completed successfully.
+
+db2 => DROP TABLE Group
+DB20000I  The SQL command completed successfully.
+
+db2 => DROP TABLE Event
+DB20000I  The SQL command completed successfully.
+
+db2 => DROP TABLE Post
+DB20000I  The SQL command completed successfully.
+
+db2 => DROP TABLE Comment
+DB20000I  The SQL command completed successfully.
+
+db2 => DROP TABLE Tag
+DB20000I  The SQL command completed successfully.
+
+db2 => DROP TABLE Friends
+DB20000I  The SQL command completed successfully.
+
+db2 => DROP TABLE PrivateMessage
+DB20000I  The SQL command completed successfully.
+
+db2 => DROP TABLE ContainsTag
+DB20000I  The SQL command completed successfully.
+
+db2 => DROP TABLE MemberOF
+DB20000I  The SQL command completed successfully.
+
+db2 => DROP TABLE Administers
+DB20000I  The SQL command completed successfully.
+
+db2 => DROP TABLE GoingTo
+DB20000I  The SQL command completed successfully.
+
+db2 => DROP TABLE Like
+DB20000I  The SQL command completed successfully.
+
+db2 => db2 => db2 (cont.) => db2 (cont.) => db2 (cont.) => db2 (cont.) => db2 (cont.) => db2 (cont.) => CREATE TABLE PageOwner (ownID INTEGER NOT NULL PRIMARY KEY, description VARCHAR(200), privacy VARCHAR(25) NOT NULL DEFAULT 'public', pageID INTEGER UNIQUE NOT NULL, CHECK (privacy IN ('public', 'private', 'friends')) )
+DB20000I  The SQL command completed successfully.
+
+db2 => db2 => db2 => db2 (cont.) => db2 (cont.) => db2 (cont.) => db2 (cont.) => db2 (cont.) => db2 (cont.) => db2 (cont.) => CREATE TABLE User (ownID INTEGER NOT NULL PRIMARY KEY, username VARCHAR(20) UNIQUE NOT NULL, birthday DATE, email VARCHAR(100) UNIQUE NOT NULL, password VARCHAR(100) NOT NULL, FOREIGN KEY (ownID) REFERENCES PageOwner )
+DB20000I  The SQL command completed successfully.
+
+db2 => db2 => db2 (cont.) => db2 (cont.) => db2 (cont.) => db2 (cont.) => db2 (cont.) => db2 (cont.) => CREATE TABLE Group (ownID INTEGER NOT NULL PRIMARY KEY, groupeName VARCHAR(50) NOT NULL, creator INTEGER NOT NULL, FOREIGN KEY (ownID) REFERENCES PageOwner, FOREIGN KEY (creator) REFERENCES User (ownID) )
+DB20000I  The SQL command completed successfully.
+
+db2 => db2 => db2 (cont.) => db2 (cont.) => db2 (cont.) => db2 (cont.) => db2 (cont.) => db2 (cont.) => db2 (cont.) => db2 (cont.) => CREATE TABLE Event (ownID INTEGER NOT NULL PRIMARY KEY, eventName VARCHAR(50) NOT NULL, eventDate TIMESTAMP, location VARCHAR(100), planner INTEGER NOT NULL, FOREIGN KEY (ownID) REFERENCES PageOwner, FOREIGN KEY (planner) REFERENCES User (ownID) )
+DB20000I  The SQL command completed successfully.
+
+db2 => db2 => db2 (cont.) => db2 (cont.) => db2 (cont.) => db2 (cont.) => db2 (cont.) => db2 (cont.) => db2 (cont.) => db2 (cont.) => db2 (cont.) => db2 (cont.) => db2 (cont.) => CREATE TABLE Post (pID INTEGER NOT NULL PRIMARY KEY, postDate TIMESTAMP NOT NULL, message VARCHAR(500) NOT NULL, poster INTEGER NOT NULL, page INTEGER NOT NULL, originalPost INTEGER, FOREIGN KEY (poster) REFERENCES User (ownID), FOREIGN KEY (page) REFERENCES PageOwner(pageID), FOREIGN KEY (originalPost) REFERENCES Post (pID), CHECK (NOT pID = originalPost) )
+DB20000I  The SQL command completed successfully.
+
+db2 => db2 => db2 (cont.) => db2 (cont.) => db2 (cont.) => db2 (cont.) => db2 (cont.) => db2 (cont.) => db2 (cont.) => db2 (cont.) => db2 (cont.) => db2 (cont.) => db2 (cont.) => CREATE TABLE Comment (cID INTEGER NOT NULL PRIMARY KEY, postDate TIMESTAMP NOT NULL, message VARCHAR(200) NOT NULL, post INTEGER NOT NULL, poster INTEGER NOT NULL, originalComment INTEGER, FOREIGN KEY (post) REFERENCES Post(pID), FOREIGN KEY (poster) REFERENCES User(ownID), FOREIGN KEY (originalComment) REFERENCES Comment(cID), CHECK (NOT originalComment = cID) )
+DB20000I  The SQL command completed successfully.
+
+db2 => db2 => db2 (cont.) => CREATE TABLE Tag (tName VARCHAR(20) NOT NULL PRIMARY KEY)
+DB20000I  The SQL command completed successfully.
+
+db2 => db2 => db2 (cont.) => db2 (cont.) => db2 (cont.) => db2 (cont.) => db2 (cont.) => db2 (cont.) => db2 (cont.) => db2 (cont.) => CREATE TABLE Friends (userA INTEGER NOT NULL, userB INTEGER NOT NULL, sinceWhen DATE NOT NULL, PRIMARY KEY (userA, userB), FOREIGN KEY (userA) REFERENCES User(ownID), FOREIGN KEY (userB) REFERENCES User(ownID), CHECK (NOT userA = userB) )
+DB20000I  The SQL command completed successfully.
+
+db2 => db2 => db2 (cont.) => db2 (cont.) => db2 (cont.) => db2 (cont.) => db2 (cont.) => db2 (cont.) => db2 (cont.) => db2 (cont.) => db2 (cont.) => CREATE TABLE PrivateMessage (pmID INTEGER NOT NULL PRIMARY KEY, message VARCHAR(200) NOT NULL, sender INTEGER NOT NULL, receiver INTEGER NOT NULL, dateSent TIMESTAMP NOT NULL, dateRead TIMESTAMP, FOREIGN KEY (sender) REFERENCES User(ownID), FOREIGN KEY (receiver) REFERENCES User(ownID) )
+DB20000I  The SQL command completed successfully.
+
+db2 => db2 => db2 => db2 (cont.) => db2 (cont.) => db2 (cont.) => db2 (cont.) => db2 (cont.) => db2 (cont.) => CREATE TABLE ContainsTag (post INTEGER NOT NULL, tag VARCHAR(20) NOT NULL, PRIMARY KEY (post,tag), FOREIGN KEY (post) REFERENCES Post(pID), FOREIGN KEY (tag) REFERENCES Tag(tName) )
+DB20000I  The SQL command completed successfully.
+
+db2 => db2 => db2 (cont.) => db2 (cont.) => db2 (cont.) => db2 (cont.) => db2 (cont.) => db2 (cont.) => CREATE TABLE MemberOF (uid INTEGER NOT NULL, gid INTEGER NOT NULL, PRIMARY KEY (uid, gid), FOREIGN KEY (uid) REFERENCES User(ownID), FOREIGN KEY (gid) REFERENCES Group(ownID) )
+DB20000I  The SQL command completed successfully.
+
+db2 => db2 => db2 (cont.) => db2 (cont.) => db2 (cont.) => db2 (cont.) => db2 (cont.) => db2 (cont.) => CREATE TABLE Administers (uid INTEGER NOT NULL, gid INTEGER NOT NULL, PRIMARY KEY (uid, gid), FOREIGN KEY (uid) REFERENCES User(ownID), FOREIGN KEY (gid) REFERENCES Group(ownID) )
+DB20000I  The SQL command completed successfully.
+
+db2 => db2 => db2 (cont.) => db2 (cont.) => db2 (cont.) => db2 (cont.) => db2 (cont.) => db2 (cont.) => CREATE TABLE GoingTo (uid INTEGER NOT NULL, eid INTEGER NOT NULL, PRIMARY KEY (uid, eid), FOREIGN KEY (uid) REFERENCES User(ownID), FOREIGN KEY (eid) REFERENCES Event(ownID) )
+DB20000I  The SQL command completed successfully.
+
+db2 => db2 => db2 (cont.) => db2 (cont.) => db2 (cont.) => db2 (cont.) => db2 (cont.) => db2 (cont.) => CREATE TABLE Like (uid INTEGER NOT NULL, pid INTEGER NOT NULL, PRIMARY KEY (uid, pid), FOREIGN KEY (uid) REFERENCES User(ownID), FOREIGN KEY (pid) REFERENCES Post )
+DB20000I  The SQL command completed successfully.
+
+db2 => db2 => db2 => 

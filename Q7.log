@@ -1,0 +1,237 @@
+(c) Copyright IBM Corporation 1993,2007
+Command Line Processor for DB2 Client 10.5.3
+
+You can issue database manager commands and SQL statements from the command 
+prompt. For example:
+    db2 => connect to sample
+    db2 => bind sample.bnd
+
+For general help, type: ?.
+For command help, type: ? command, where command can be
+the first few keywords of a database manager command. For example:
+ ? CATALOG DATABASE for help on the CATALOG DATABASE command
+ ? CATALOG          for help on all of the CATALOG commands.
+
+To exit db2 interactive mode, type QUIT at the command prompt. Outside 
+interactive mode, all commands must be prefixed with 'db2'.
+To list the current command option settings, type LIST COMMAND OPTIONS.
+
+For more detailed help, refer to the Online Reference Manual.
+
+db2 => OP VIEW PublicPageOwners
+DB21034E  The command was processed as an SQL statement because it was not a 
+valid Command Line Processor command.  During SQL processing it returned:
+SQL0104N  An unexpected token "VIEW" was found following "OP ".  Expected 
+tokens may include:  "JOIN <joined_table>".  SQLSTATE=42601
+
+db2 => DROP VIEW PublicUsers
+DB20000I  The SQL command completed successfully.
+
+db2 => DROP VIEW PublicGroups
+DB20000I  The SQL command completed successfully.
+
+db2 => DROP VIEW PublicEvents
+DB20000I  The SQL command completed successfully.
+
+db2 => DROP VIEW BiDirectionalFriends
+DB20000I  The SQL command completed successfully.
+
+db2 => DROP VIEW FriendsOfFriends
+DB20000I  The SQL command completed successfully.
+
+db2 => db2 => db2 (cont.) => db2 (cont.) => CREATE VIEW PublicPageOwners as SELECT * FROM PageOwner WHERE privacy = 'public'
+DB21034E  The command was processed as an SQL statement because it was not a 
+valid Command Line Processor command.  During SQL processing it returned:
+SQL0601N  The name of the object to be created is identical to the existing 
+name "CS421G43.PUBLICPAGEOWNERS" of type "VIEW".  SQLSTATE=42710
+
+db2 => db2 => db2 (cont.) => db2 (cont.) => db2 (cont.) => CREATE VIEW PublicUsers as SELECT u.ownID, username, birthday, email, description, privacy, pageID FROM (USER u JOIN PublicPageOwners o ON u.ownID = o.ownID)
+DB20000I  The SQL command completed successfully.
+
+db2 => db2 => db2 (cont.) => db2 (cont.) => db2 (cont.) => CREATE VIEW PublicGroups as SELECT g.ownID, groupeName, creator, description, privacy, pageID  FROM (Group g JOIN PublicPageOwners o ON g.ownID = o.ownID)
+DB20000I  The SQL command completed successfully.
+
+db2 => db2 => db2 (cont.) => db2 (cont.) => db2 (cont.) => CREATE VIEW PublicEvents as SELECT e.ownID, eventName, eventDate, location, planner, description, privacy, pageID FROM (Event e JOIN PublicPageOwners o ON e.ownID = o.ownID)
+DB20000I  The SQL command completed successfully.
+
+db2 => db2 => db2 (cont.) => db2 (cont.) => db2 (cont.) => db2 (cont.) => CREATE VIEW BiDirectionalFriends as SELECT * FROM Friends UNION SELECT userB, userA, sinceWhen FROM Friends
+DB20000I  The SQL command completed successfully.
+
+db2 => db2 => db2 (cont.) => db2 (cont.) => db2 (cont.) => db2 (cont.) => db2 (cont.) => db2 (cont.) => db2 (cont.) => db2 (cont.) => CREATE VIEW FriendsOfFriends as SELECT u1.userA, u2.userB FROM(BiDirectionalFriends u1 JOIN BiDirectionalFriends u2 ON u1.userB = u2.userA) EXCEPT SELECT userA, userB FROM BiDirectionalFriends EXCEPT SELECT ownID, ownID FROM User
+DB20000I  The SQL command completed successfully.
+
+db2 => db2 => SELECT * FROM BiDirectionalFriends
+
+USERA       USERB       SINCEWHEN 
+----------- ----------- ----------
+  599139388   544404605 03/12/2000
+  544404605   599139388 03/12/2000
+  854480438   310484255 06/17/2000
+  310484255   854480438 06/17/2000
+  599139388   310484255 10/27/2000
+  310484255   599139388 10/27/2000
+  544404605   310484255 02/22/2002
+  310484255   544404605 02/22/2002
+  508739761   310484255 04/27/2002
+  310484255   508739761 04/27/2002
+  873409324   326736162 04/04/2003
+  326736162   873409324 04/04/2003
+  326736162   209990282 07/04/2004
+  209990282   326736162 07/04/2004
+  739699897   508739761 04/07/2005
+  508739761   739699897 04/07/2005
+  544404605   326736162 05/26/2006
+  326736162   544404605 05/26/2006
+  854480438   326736162 05/02/2007
+  326736162   854480438 05/02/2007
+  873409324   854480438 07/22/2007
+  854480438   873409324 07/22/2007
+  854480438   218767304 07/25/2007
+  218767304   854480438 07/25/2007
+  218767304   209990282 04/17/2008
+  209990282   218767304 04/17/2008
+  508739761   218767304 06/01/2008
+  218767304   508739761 06/01/2008
+  310484255   218767304 06/18/2008
+  218767304   310484255 06/18/2008
+  544404605   508739761 02/11/2009
+  508739761   544404605 02/11/2009
+  873409324   739699897 09/19/2011
+  739699897   873409324 09/19/2011
+  544404605   218767304 01/07/2012
+  218767304   544404605 01/07/2012
+  854480438   599139388 04/15/2012
+  599139388   854480438 04/15/2012
+  873409324   599139388 02/20/2015
+  599139388   873409324 02/20/2015
+  310484255   209990282 04/03/2015
+  209990282   310484255 04/03/2015
+  544404605   209990282 05/05/2015
+  209990282   544404605 05/05/2015
+  854480438   209990282 04/22/2016
+  209990282   854480438 04/22/2016
+  873409324   209990282 10/01/2016
+  209990282   873409324 10/01/2016
+  326736162   310484255 06/03/2017
+  310484255   326736162 06/03/2017
+
+  50 record(s) selected.
+
+
+db2 => SELECT * FROM FriendsOfFriends
+
+USERA       USERB      
+----------- -----------
+  508739761   209990282
+  599139388   209990282
+  739699897   209990282
+  326736162   218767304
+  599139388   218767304
+  739699897   218767304
+  873409324   218767304
+  739699897   310484255
+  873409324   310484255
+  218767304   326736162
+  508739761   326736162
+  599139388   326736162
+  739699897   326736162
+  209990282   508739761
+  326736162   508739761
+  599139388   508739761
+  854480438   508739761
+  873409324   508739761
+  739699897   544404605
+  854480438   544404605
+  873409324   544404605
+  209990282   599139388
+  218767304   599139388
+  326736162   599139388
+  508739761   599139388
+  739699897   599139388
+  209990282   739699897
+  218767304   739699897
+  310484255   739699897
+  326736162   739699897
+  544404605   739699897
+  599139388   739699897
+  854480438   739699897
+  508739761   854480438
+  544404605   854480438
+  739699897   854480438
+  218767304   873409324
+  310484255   873409324
+  508739761   873409324
+  544404605   873409324
+
+  40 record(s) selected.
+
+
+db2 => db2 => SELECT ownID, groupeName, privacy FROM PublicGroups
+
+OWNID       GROUPENAME                                         PRIVACY                  
+----------- -------------------------------------------------- -------------------------
+          4 CompSci                                            public                   
+  548496659 DNNVCSIYRLXZEBAEMLZALZKQSZSMRWDDTRGGKURMEBCBU      public                   
+  496790376 ECUORDXDEFKNGRIXLULIQXAQZCVNVDSWNOZCXDXOUEMXF      public                   
+   72963698 YWPLCIUSGSEVQJUCFXARSXYVWROZRPIFAUNLJNBWBBHNY      public                   
+  100196380 ZGCZMGFGBKZMUCDZTRTBLEFLONKJYJKNXFOVEVOENRULK      public                   
+
+  5 record(s) selected.
+
+
+db2 => db2 (cont.) => db2 (cont.) => UPDATE Group SET groupeName = 'Computer Science' WHERE groupeName = 'CompSci'
+DB20000I  The SQL command completed successfully.
+
+db2 => db2 (cont.) => UPDATE PageOwner SET privacy = 'private' WHERE ownID = 100196380
+DB20000I  The SQL command completed successfully.
+
+db2 => db2 => SELECT ownID, groupeName, privacy FROM PublicGroups
+
+OWNID       GROUPENAME                                         PRIVACY                  
+----------- -------------------------------------------------- -------------------------
+          4 Computer Science                                   public                   
+  548496659 DNNVCSIYRLXZEBAEMLZALZKQSZSMRWDDTRGGKURMEBCBU      public                   
+  496790376 ECUORDXDEFKNGRIXLULIQXAQZCVNVDSWNOZCXDXOUEMXF      public                   
+   72963698 YWPLCIUSGSEVQJUCFXARSXYVWROZRPIFAUNLJNBWBBHNY      public                   
+
+  4 record(s) selected.
+
+
+db2 => db2 => SELECT * FROM FriendsOfFriends fetch first 7 rows only
+
+USERA       USERB      
+----------- -----------
+  508739761   209990282
+  599139388   209990282
+  739699897   209990282
+  326736162   218767304
+  599139388   218767304
+  739699897   218767304
+  873409324   218767304
+
+  7 record(s) selected.
+
+
+db2 => DELETE FROM friends where userA = 0 AND userB = 2
+SQL0100W  No row was found for FETCH, UPDATE or DELETE; or the result of a 
+query is an empty table.  SQLSTATE=02000
+
+db2 => INSERT INTO Friends VALUES (1,2,(Values current TIMESTAMP))
+DB20000I  The SQL command completed successfully.
+
+db2 => SELECT * FROM FriendsOfFriends fetch first 7 rows only
+
+USERA       USERB      
+----------- -----------
+  508739761   209990282
+  599139388   209990282
+  739699897   209990282
+  326736162   218767304
+  599139388   218767304
+  739699897   218767304
+  873409324   218767304
+
+  7 record(s) selected.
+
+
+db2 => db2 => db2 => 
