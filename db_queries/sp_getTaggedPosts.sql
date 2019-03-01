@@ -13,8 +13,8 @@ CREATE OR REPLACE PROCEDURE getTaggedPosts( IN user1 INTEGER,
                                     FROM    ContainsTag 
                                     WHERE   post = p.pID 
                                     AND     tag = tag1) 
-                AND         (po.privacy = "public" 
-                             OR (po.privacy = "friends"  
+                AND         (po.privacy = 'public'
+                             OR (po.privacy = 'friends'  
                                 AND EXISTS( SELECT  * 
                                             FROM    BidirectionalFriends
                                             WHERE   userA = user1

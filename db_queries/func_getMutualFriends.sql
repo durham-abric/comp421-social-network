@@ -2,7 +2,6 @@ CREATE OR REPLACE FUNCTION getMutualFriends(user1 INTEGER,
                                             user2 INTEGER)
     RETURNS TABLE(mutualFriend INTEGER)
     LANGUAGE SQL
-    NO EXTERNAL ACTION
 
     BEGIN ATOMIC
         RETURN
