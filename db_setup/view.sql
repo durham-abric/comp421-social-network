@@ -1,3 +1,10 @@
+DROP VIEW PublicPageOwners;
+DROP VIEW PublicUsers;
+DROP VIEW PublicGroups;
+DROP VIEW PublicEvents;
+DROP VIEW BiDirectionalFriends;
+DROP VIEW FriendsOfFriends;
+
 CREATE VIEW PublicPageOwners
 as
 SELECT * FROM PageOwner WHERE privacy = 'public';
@@ -21,7 +28,7 @@ CREATE VIEW BiDirectionalFriends
 as
 	SELECT * FROM Friends
 	UNION
-	SELECT userB, userA, sinceWhen FROM Friends
+	SELECT userB, userA, sinceWhen FROM Friends;
 
 CREATE VIEW FriendsOfFriends
 as
@@ -39,8 +46,16 @@ SELECT * FROM FriendsOfFriends;
 --SELECT u1.username, u2.username FROM
 --User u1, friendsOfFriends f, User u2 WHERE u1.ownID = f.userA AND u2.ownID = f.userB
 
-SELECT * FROM PublicGroups;
+SELECT ownID, groupeName, privacy FROM PublicGroups;
 UPDATE Group
 	SET groupeName = 'Computer Science'
 	WHERE groupeName = 'CompSci';
-SELECT * FROM PublicGroups;
+UPDATE PageOwner
+	SET privacy = 'private' WHERE ownID = 100196380;
+	
+SELECT ownID, groupeName, privacy FROM PublicGroups;
+
+SELECT * FROM FriendsOfFriends;
+DELETE FROM friends where userA = 0 AND userB = 2;
+INSERT INTO Friends VALUES (1,2,(Values current TIMESTAMP));
+SELECT * FROM FriendsOfFriends;
