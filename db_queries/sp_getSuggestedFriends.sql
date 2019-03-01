@@ -4,10 +4,10 @@ CREATE OR REPLACE PROCEDURE getSuggestedFriends(IN user1 INTEGER)
     BEGIN 
 
         DECLARE cur CURSOR WITH RETURN TO CALLER
-            FOR SELECT USERB
-                    FROM FRIENDSOFFRIENDS
-                WHERE USERA = user1
-                ORDER BY numMutualFriends(user1, USERB) DESC;
+            FOR SELECT      userB AS suggested
+                FROM        FriendsOfFriends
+                WHERE       userA = user1
+                ORDER BY    numMutualFriends(user1, userB) DESC;
                 
         OPEN cur;
 

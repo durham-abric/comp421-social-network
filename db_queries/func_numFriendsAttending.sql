@@ -11,6 +11,6 @@ CREATE OR REPLACE FUNCTION numFriendsAttending(user1 INTEGER,
             WHERE EXISTS(SELECT * 
                             FROM BIDIRECTIONALFRIENDS as bdf 
                         WHERE bdf.USERA = user1 AND
-                        bdf.USERB = uid) AND
-            eid = event;
+                        bdf.USERB = gt.uid) AND
+            gt.eid = event;
     END@
