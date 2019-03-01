@@ -5,8 +5,13 @@ CREATE OR REPLACE FUNCTION areFriends(  user1 INTEGER,
     NO EXTERNAL ACTION
 
     BEGIN
-        RETURN SELECT EXISTS(   SELECT * 
-                                FROM BidirectionalFriends
-                                WHERE userA = user1
-                                AND userB = user2);
+        RETURN SELECT   CASE
+                            WHEN    EXISTS( SELECT * 
+                                            FROM BidirectionalFriends
+                                            WHERE userA = user1
+                                            AND userB = user2)
+                            THEN    TRUE
+                            ELSE    FALSE
+                        END;
+
     END @
