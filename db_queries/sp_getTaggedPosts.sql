@@ -11,15 +11,15 @@ CREATE OR REPLACE PROCEDURE getTaggedPosts( IN user1 INTEGER,
                                 FROM    ContainsTag 
                                 WHERE   post = p.pID 
                                 AND     tag = tag1) 
-                AND         (p.privacy = "public" 
-                             OR (p.privacy = "friends"  
+                AND         (privacy = "public" 
+                             OR (privacy = "friends"  
                                 AND EXISTS( SELECT  * 
                                             FROM    BidirectionalFriends
                                             WHERE   USERA = user1
                                             AND     USERB = p.poster)
                                 )   
                             )
-                ORDER BY    p.postDate DESC;
+                ORDER BY    postDate DESC;
 
         OPEN cur;
     
