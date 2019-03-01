@@ -9,13 +9,14 @@ CREATE OR REPLACE PROCEDURE getTaggedPosts(IN user1 INTEGER,
                     FROM POST
                 WHERE EXISTS(SELECT *
                                 FROM CONTAINSTAG
-                            WHERE CONTAINSTAG.post - POST.pid AND
-                            CONTAINSTAG.tag = "placeholder") AND
+                            WHERE CONTAINSTAG.post = POST.pID AND
+                            CONTAINSTAG.tag = tag) AND
                 (POST.privacy = "public" OR
                 (POST.privacy = "friends" AND 
-                EXISTS (SELECT * 
-                            FROM BIDIRECTIONALFRIENDS
-                        WHERE USERA = "placeholder")))
+                    EXISTS (SELECT * 
+                                FROM BIDIRECTIONALFRIENDS
+                            WHERE USERA = user1 AND
+                            USERB = POST.poster)))
                 ORDER BY POST.postDate DESC;
 
         OPEN cur;
