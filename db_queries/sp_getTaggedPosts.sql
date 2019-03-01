@@ -7,21 +7,21 @@ CREATE OR REPLACE PROCEDURE getTaggedPosts( IN user1 INTEGER,
         DECLARE cur CURSOR WITH RETURN TO CALLER
             FOR SELECT      p.*
                 FROM        Post as p
-                            JOIN User as u
-                            ON p.poster = u.ownID
+                            LEFT JOIN PageOwner as po
+                            ON p.poster = po.ownID
                 WHERE       EXISTS( SELECT  * 
                                     FROM    ContainsTag 
                                     WHERE   post = p.pID 
                                     AND     tag = tag1) 
-                AND         (u.privacy = "public" 
-                             OR (u.privacy = "friends"  
+                AND         (po.privacy = "public" 
+                             OR (po.privacy = "friends"  
                                 AND EXISTS( SELECT  * 
                                             FROM    BidirectionalFriends
                                             WHERE   userA = user1
-                                            AND     userB = u.ownID)
+                                            AND     userB = po.ownID)
                                 )   
                             )
-                ORDER BY    postDate DESC;
+                ORDER BY    p.postDate DESC;
 
         OPEN cur;
     
