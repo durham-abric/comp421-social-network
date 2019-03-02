@@ -11,5 +11,6 @@ CREATE OR REPLACE FUNCTION areFriends(  user1 INTEGER,
                                          WHERE userA = user1
                                          AND userB = user2) THEN 1
                             ELSE 0
-                        END CASE;
+                        END CASE
+                END SELECT;
     END@
