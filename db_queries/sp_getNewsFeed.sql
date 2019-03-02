@@ -5,7 +5,7 @@ CREATE OR REPLACE PROCEDURE getNewsFeed(IN user1 INTEGER,
     BEGIN ATOMIC
 
         DECLARE cur as CURSOR WITH RETURN TO CALLER
-            FOR SELECT * 
+            FOR SELECT DISTINCT* 
                 FROM Post
                 WHERE EXISTS(   SELECT *
                                 FROM TABLE(getNewsFeedComments(user1) AS c
@@ -14,7 +14,6 @@ CREATE OR REPLACE PROCEDURE getNewsFeed(IN user1 INTEGER,
                                 FROM TABLE(getNewsFeedLikes(user1)) AS l
                                 WHERE pID = l.pID)
                 OR areFriends(user1, poster))
-                GROUP BY pID, postDate
                 ORDER BY postDate DESC
                 LIMIT numPosts;
 

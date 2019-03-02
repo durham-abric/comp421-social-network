@@ -9,7 +9,7 @@ CREATE OR REPLACE FUNCTION getNewsFeed(user1 INTEGER)
     NO EXTERNAL ACTION
 
     BEGIN ATOMIC
-      RETURN  SELECT    * 
+      RETURN  SELECT    DISTINCT * 
               FROM      Post
               WHERE     EXISTS(SELECT *
                                FROM   TABLE(getNewsFeedComments(user1)) AS c
@@ -18,8 +18,6 @@ CREATE OR REPLACE FUNCTION getNewsFeed(user1 INTEGER)
                                FROM   TABLE(getNewsFeedLikes(user1)) AS l
                                WHERE  pID = l.pID)
               OR        areFriends(user1, poster) = 1
-              GROUP BY  pID,
-                        postDate
               ORDER BY  postDate DESC
               LIMIT     numPosts;
     END@
