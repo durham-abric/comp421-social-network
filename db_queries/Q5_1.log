@@ -1,0 +1,17 @@
+CALL getMutualFriends(209990282, 599139388)
+
+
+  Result set 1
+  --------------
+
+  USERB      
+  -----------
+    310484255
+    544404605
+    854480438
+    873409324
+
+  4 record(s) selected.
+
+  Return Status = 0
+

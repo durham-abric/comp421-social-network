@@ -1,0 +1,4 @@
+SELECT * tag FROM ContainsTag; CALL tagPostsOnPage(SQL0811N  The result of a scalar fullselect, SELECT INTO statement, or VALUES
+SQL0104N  An unexpected token "tag" was found following "SELECT * ".  Expected 
+tokens may include:  "<space>".  SQLSTATE=42601
+

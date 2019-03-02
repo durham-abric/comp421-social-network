@@ -1,0 +1,18 @@
+CALL getSuggestedFriends(599139388)
+
+
+  Result set 1
+  --------------
+
+  SUGGESTED   MUTUAL     
+  ----------- -----------
+    209990282           4
+    326736162           4
+    218767304           3
+    508739761           2
+    739699897           1
+
+  5 record(s) selected.
+
+  Return Status = 0
+
