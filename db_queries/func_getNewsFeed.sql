@@ -1,4 +1,5 @@
-CREATE OR REPLACE FUNCTION getNewsFeed(user1 INTEGER)
+CREATE OR REPLACE FUNCTION getNewsFeed(user1 INTEGER,
+                                       numPosts INTEGER)
     RETURNS TABLE(pID INTEGER,
                   postDate TIMESTAMP, 
                   message VARCHAR(500), 
