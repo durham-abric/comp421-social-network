@@ -6,7 +6,7 @@ CREATE OR REPLACE PROCEDURE tagPostsOnPage( IN pageID INTEGER,
       
         INSERT INTO ContainsTag
         SELECT      pID, tag
-        FROM        Posts
+        FROM        Post
         WHERE       page = pageID
         AND         EXISTS( SELECT  * 
                             FROM    Tag 

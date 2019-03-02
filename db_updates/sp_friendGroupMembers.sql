@@ -4,7 +4,7 @@ CREATE OR REPLACE PROCEDURE friendGroupMembers( IN user1 INTEGER,
 
     BEGIN
 
-        DECLARE today AS DATE;
+        DECLARE today DATE;
         SELECT today = CURRENT_DATE FROM sysibm.sysdummy1;
 
         INSERT INTO Friends
