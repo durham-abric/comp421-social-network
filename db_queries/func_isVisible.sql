@@ -18,7 +18,7 @@ CREATE OR REPLACE FUNCTION isVisible( user1 INTEGER,
       FROM Post AS p
       JOIN PageOwner AS po
       ON p.page = po.pageID
-      AND p.pID = post;
+      WHERE p.pID = post;
 
       RETURN visible;
 
