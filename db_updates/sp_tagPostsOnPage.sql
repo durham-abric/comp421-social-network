@@ -2,7 +2,7 @@ CREATE OR REPLACE PROCEDURE tagPostsOnPage( IN pageID INTEGER,
                                             IN tag VARCHAR(20))
     LANGUAGE SQL
 
-    BEGIN
+    BEGIN ATOMIC
       
         INSERT INTO ContainsTag
         SELECT      pID, tag
