@@ -5,15 +5,15 @@ CREATE OR REPLACE FUNCTION isPostVisible( user1 INTEGER,
     NO EXTERNAL ACTION
 
     BEGIN
-      SELECT  CASE 
-                WHEN po.privacy = 'private' THEN 0
-                WHEN po.privacy = 'public'  THEN 1
-                WHEN po.privacy = 'friends' THEN areFriends(user1, p.poster)
-                ELSE -1
-              END
-      FROM Post AS p
-      JOIN PageOwner AS po
-      ON p.page = po.pageID
-      WHERE p.pID = post;
+      RETURN  SELECT  CASE 
+                        WHEN po.privacy = 'private' THEN 0
+                        WHEN po.privacy = 'public'  THEN 1
+                        WHEN po.privacy = 'friends' THEN areFriends(user1, p.poster)
+                        ELSE -1
+                      END
+              FROM Post AS p
+              JOIN PageOwner AS po
+              ON p.page = po.pageID
+              WHERE p.pID = post;
     END@
     
