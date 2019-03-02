@@ -4,7 +4,7 @@ CREATE OR REPLACE FUNCTION getMutualFriends(user1 INTEGER,
     LANGUAGE SQL
     NO EXTERNAL ACTION
 
-    BEGIN
+    BEGIN ATOMIC
         RETURN  SELECT  DISTINCT(userB)
                 FROM    BidirectionalFriends
                 WHERE   areFriends(user1, userB) = 1  
