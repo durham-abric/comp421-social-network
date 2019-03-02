@@ -13,6 +13,6 @@ CREATE OR REPLACE PROCEDURE friendSuggested(IN user1 INTEGER,
         INSERT INTO Friends
         SELECT      user1, uID, today
         FROM        TABLE(getSuggestedFriends(user1))
-        LIMIT       top;
+        FETCH       FIRST 10 ROWS ONLY;
 
     END@
