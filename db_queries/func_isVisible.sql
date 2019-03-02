@@ -6,7 +6,7 @@ CREATE OR REPLACE FUNCTION isPostVisible( user1 INTEGER,
 
     BEGIN
 
-      DECLARE visible AS INTEGER;
+      DECLARE visible INTEGER;
 
       SELECT  visible = (CASE po.privacy
                             WHEN po.privacy = 'private' THEN 0
@@ -20,6 +20,6 @@ CREATE OR REPLACE FUNCTION isPostVisible( user1 INTEGER,
       WHERE p.pID = post;
 
       RETURN visible;
-      
+
     END@
     
