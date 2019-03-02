@@ -1,5 +1,4 @@
-CREATE OR REPLACE PROCEDURE getNewsFeed(IN user1 INTEGER,
-                                        IN numPosts INTEGER)
+CREATE OR REPLACE PROCEDURE getNewsFeed(IN user1 INTEGER)
     LANGUAGE SQL
 
     BEGIN ATOMIC
@@ -15,6 +14,6 @@ CREATE OR REPLACE PROCEDURE getNewsFeed(IN user1 INTEGER,
                                 WHERE pID = l.pID)
                 OR areFriends(user1, poster) = 1
                 ORDER BY postDate DESC
-                FETCH FIRST numPosts ROWS ONLY;
+                FETCH FIRST 100 ROWS ONLY;
 
     END@

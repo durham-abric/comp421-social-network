@@ -1,5 +1,4 @@
-CREATE OR REPLACE FUNCTION getNewsFeed(user1 INTEGER,
-                                       numPosts INTEGER)
+CREATE OR REPLACE FUNCTION getNewsFeed(user1 INTEGER)
     RETURNS TABLE(pID INTEGER,
                   postDate TIMESTAMP, 
                   message VARCHAR(500), 
@@ -20,5 +19,5 @@ CREATE OR REPLACE FUNCTION getNewsFeed(user1 INTEGER,
                                WHERE  pID = l.pID)
               OR        areFriends(user1, poster) = 1
               ORDER BY  postDate DESC
-              FETCH FIRST numPosts ROWS ONLY;
+              FETCH FIRST 100 ROWS ONLY;
     END@
