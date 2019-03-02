@@ -8,7 +8,7 @@ CREATE OR REPLACE FUNCTION getNewsFeed(user1 INTEGER)
     LANGUAGE SQL
     NO EXTERNAL ACTION
 
-    BEGIN
+    BEGIN ATOMIC
       RETURN  SELECT    * 
               FROM      Post
               WHERE     EXISTS(SELECT *

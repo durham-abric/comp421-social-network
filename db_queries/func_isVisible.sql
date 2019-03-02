@@ -1,5 +1,5 @@
-CREATE OR REPLACE FUNCTION isPostVisible( user1 INTEGER,
-                                          post  INTEGER)
+CREATE OR REPLACE FUNCTION isVisible( user1 INTEGER,
+                                      post  INTEGER)
     RETURNS INTEGER
     LANGUAGE SQL
     NO EXTERNAL ACTION

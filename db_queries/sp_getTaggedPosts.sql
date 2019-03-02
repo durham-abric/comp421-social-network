@@ -2,7 +2,7 @@ CREATE OR REPLACE PROCEDURE getTaggedPosts( IN user1 INTEGER,
                                             IN tag1 VARCHAR(20))
     LANGUAGE SQL
 
-    BEGIN
+    BEGIN ATOMIC
 
         DECLARE cur CURSOR WITH RETURN TO CALLER
             FOR SELECT      *

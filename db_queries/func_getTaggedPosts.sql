@@ -9,7 +9,7 @@ CREATE OR REPLACE FUNCTION  getTaggedPosts( user1 INTEGER,
     LANGUAGE SQL
     NO EXTERNAL ACTION
 
-    BEGIN
+    BEGIN ATOMIC
         RETURN  SELECT      *
                 FROM        Post
                 WHERE       EXISTS( SELECT  * 

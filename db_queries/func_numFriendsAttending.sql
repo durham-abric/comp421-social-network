@@ -4,7 +4,7 @@ CREATE OR REPLACE FUNCTION numFriendsAttending( user1 INTEGER,
     LANGUAGE SQL
     NO EXTERNAL ACTION
 
-    BEGIN 
+    BEGIN ATOMIC
         RETURN  SELECT  COUNT(*) 
                 FROM    TABLE(getFriendsAttending(user1, event));
     END@

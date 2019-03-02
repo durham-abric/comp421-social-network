@@ -5,7 +5,7 @@ CREATE OR REPLACE FUNCTION getMutualFriends(user1 INTEGER,
     NO EXTERNAL ACTION
 
     BEGIN
-        RETURN  SELECT  DISTINCT(userB) 
+        RETURN  SELECT  DISTINCT(userB)
                 FROM    BidirectionalFriends
                 WHERE   areFriends(user1, userB) = 1  
                 AND     areFriends(user2, userB) = 1;           

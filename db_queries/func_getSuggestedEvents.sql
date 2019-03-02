@@ -7,7 +7,7 @@ CREATE OR REPLACE FUNCTION getSuggestedEvents(user1 INTEGER)
     LANGUAGE SQL
     NO EXTERNAL ACTION
 
-    BEGIN
+    BEGIN ATOMIC
         RETURN  SELECT      *
                 FROM        Event
                 WHERE       numFriendsAttending(user1, ownID) > 0

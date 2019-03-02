@@ -4,9 +4,9 @@ CREATE OR REPLACE FUNCTION getNewsFeedComments(user1 INTEGER)
     LANGUAGE SQL
     NO EXTERNAL ACTION
 
-    BEGIN 
+    BEGIN ATOMIC
         RETURN  SELECT  post, poster
-                FROM    Comments
+                FROM    Comment
                 WHERE   areFriends(user1, poster) = 1
                 AND     isVisible(user1, post) = 1;
     END@

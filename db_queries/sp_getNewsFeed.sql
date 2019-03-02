@@ -2,7 +2,7 @@ CREATE OR REPLACE PROCEDURE getNewsFeed(IN user1 INTEGER,
                                         IN numPosts INTEGER)
     LANGUAGE SQL
 
-    BEGIN
+    BEGIN ATOMIC
 
         DECLARE cur as CURSOR WITH RETURN TO CALLER
             FOR SELECT * 

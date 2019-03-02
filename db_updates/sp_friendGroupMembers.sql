@@ -2,7 +2,7 @@ CREATE OR REPLACE PROCEDURE friendGroupMembers( IN user1 INTEGER,
                                                 IN group INTEGER)
     LANGUAGE SQL
 
-    BEGIN
+    BEGIN ATOMIC
 
         DECLARE today DATE;
         SELECT today = CURRENT_DATE FROM sysibm.sysdummy1;

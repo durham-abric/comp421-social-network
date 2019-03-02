@@ -3,7 +3,7 @@ CREATE OR REPLACE PROCEDURE editComment(IN user1 INTEGER.
                                         IN newMessage VARCHAR(200))
     LANGUAGE SQL
 
-    BEGIN
+    BEGIN ATOMIC
 
         DECLARE today DATE;
         SELECT today = CURRENT_DATE FROM sysibm.sysdummy1;

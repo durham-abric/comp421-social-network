@@ -4,9 +4,9 @@ REATE OR REPLACE FUNCTION getNewsFeedLikes(user1 INTEGER)
     LANGUAGE SQL
     NO EXTERNAL ACTION
 
-    BEGIN 
+    BEGIN ATOMIC
         RETURN  SELECT  pID, uID
                 FROM    Like
                 WHERE   areFriends(user1, uID) = 1
                 AND     isVisible(user1, pID) = 1;
-    END
+    END@

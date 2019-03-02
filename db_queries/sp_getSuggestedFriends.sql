@@ -1,7 +1,7 @@
 CREATE OR REPLACE PROCEDURE getSuggestedFriends(IN user1 INTEGER)
     LANGUAGE SQL
 
-    BEGIN 
+    BEGIN ATOMIC
 
         DECLARE cur CURSOR WITH RETURN TO CALLER
             FOR SELECT      userB AS suggested

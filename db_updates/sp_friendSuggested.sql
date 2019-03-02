@@ -2,7 +2,7 @@ CREATE OR REPLACE PROCEDURE friendSuggested(IN user1 INTEGER,
                                             IN top INTEGER)
     LANGUAGE SQL
 
-    BEGIN
+    BEGIN ATOMIC
 
         DECLARE today DATE;
         SELECT today = CURRENT_DATE FROM sysibm.sysdummy1;

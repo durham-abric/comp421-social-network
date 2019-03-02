@@ -4,7 +4,7 @@ CREATE OR REPLACE FUNCTION numMutualFriends(user1 INTEGER,
     LANGUAGE SQL
     NO EXTERNAL ACTION
 
-    BEGIN
+    BEGIN ATOMIC
         RETURN  SELECT  COUNT(*)
                 FROM    TABLE(getMutualFriends(user1, user2));
     END@
