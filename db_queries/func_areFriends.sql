@@ -6,15 +6,15 @@ CREATE OR REPLACE FUNCTION areFriends(  user1 INTEGER,
 
     BEGIN
         DECLARE friend INTEGER;
-        
+
         SELECT  CASE
                     WHEN COUNT(*) > 0 THEN 1
                     ELSE 0
                 END CASE
+        INTO friend
         FROM BidirectionalFriends 
         WHERE userA = user1
-        AND userB = user2
-        INTO friend;
+        AND userB = user2;
 
         RETURN friend;
         
