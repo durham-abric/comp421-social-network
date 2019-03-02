@@ -1,16 +1,12 @@
-CREATE OR REPLACE FUNCTION getFriendsAttending(user1 INTEGER, 
-                                            event INTEGER)
-    RETURNS TABLE(friendAttending INTEGER)
+CREATE OR REPLACE FUNCTION getFriendsAttending( user1 INTEGER, 
+                                                event INTEGER)
+    RETURNS TABLE(uID INTEGER)
     LANGUAGE SQL
     NO EXTERNAL ACTION
 
-    BEGIN ATOMIC
-        RETURN
-            SELECT DISTINCT(uid) 
-                FROM GOINGTO AS gt
-            WHERE EXISTS(SELECT * 
-                            FROM BIDIRECTIONALFRIENDS as bdf 
-                        WHERE bdf.USERA = user1 AND
-                        bdf.USERB = uid) AND
-            eid = event;
+    BEGIN
+        RETURN  SELECT  DISTINCT(uID) 
+                FROM    GoingTo
+                WHERE   areFriends(user1, uID) = 1
+                AND     eID = event;
     END@

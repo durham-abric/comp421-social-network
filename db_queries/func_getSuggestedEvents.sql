@@ -1,16 +1,17 @@
 CREATE OR REPLACE FUNCTION getSuggestedEvents(user1 INTEGER)
-    RETURNS TABLE(eig INTEGER, 
-                eventName VARCHAR(50), 
-                eventDate TIMESTAMP, 
-                location VARCHAR(100))
+    RETURNS TABLE(  eID INTEGER, 
+                    eventName VARCHAR(50), 
+                    eventDate TIMESTAMP, 
+                    location VARCHAR(100),
+                    planner INTEGER)
     LANGUAGE SQL
     NO EXTERNAL ACTION
 
-    BEGIN ATOMIC
-        RETURN SELECT eid, eventName, eventDate, location
-                    FROM EVENT AS ev
-                WHERE numFriendsAttending(user1, ev.eid) > 0
-                AND eventDate > (SELECT current date FROM sysibm.sysdummy1)
-                ORDER BY numFriendsAttending(user1, eid) DESC;
+    BEGIN
+        RETURN  SELECT      *
+                FROM        Event
+                WHERE       numFriendsAttending(user1, ownID) > 0
+                AND         eventDate > (SELECT CURRENT_DATE FROM sysibm.sysdummy1)
+                ORDER BY    numFriendsAttending(user1, ownID) DESC;
 
     END@

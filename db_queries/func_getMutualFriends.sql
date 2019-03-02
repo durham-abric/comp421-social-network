@@ -1,15 +1,12 @@
 CREATE OR REPLACE FUNCTION getMutualFriends(user1 INTEGER, 
                                             user2 INTEGER)
-    RETURNS TABLE(mutualFriend INTEGER)
+    RETURNS TABLE(uID INTEGER)
     LANGUAGE SQL
+    NO EXTERNAL ACTION
 
-    BEGIN ATOMIC
-        RETURN
-            SELECT DISTINCT(USERB) 
-                FROM BIDIRECTIONALFRIENDS AS bdf1
-            WHERE EXISTS(SELECT * 
-                            FROM BIDIRECTIONALFRIENDS as bdf2 
-                        WHERE bdf1.USERA = user1 AND
-                            bdf2.USERA = user2 AND
-                            bdf1.USERB = bdf2.USERB);
+    BEGIN
+        RETURN  SELECT  DISTINCT(userB) 
+                FROM    BidirectionalFriends
+                WHERE   areFriends(user1, userB) = 1  
+                AND     areFriends(user2, userB) = 1;           
     END@
