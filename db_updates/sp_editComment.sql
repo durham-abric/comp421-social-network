@@ -6,7 +6,10 @@ CREATE OR REPLACE PROCEDURE editComment(IN user1 INTEGER,
     BEGIN ATOMIC
 
         DECLARE today DATE;
-        SELECT today = CURRENT_DATE FROM sysibm.sysdummy1;
+        
+        SELECT CURRENT_DATE 
+        INTO today
+        FROM sysibm.sysdummy1;
 
         UPDATE  Comment
         SET     message = newMessage,
