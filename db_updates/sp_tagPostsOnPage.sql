@@ -10,6 +10,6 @@ CREATE OR REPLACE PROCEDURE tagPostsOnPage( IN pageID INTEGER,
         WHERE       page = pageID
         AND         EXISTS( SELECT  * 
                             FROM    Tag 
-                            WHERE   tName = tag)
+                            WHERE   tName = tag);
 
     END@
