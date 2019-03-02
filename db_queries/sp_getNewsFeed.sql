@@ -15,5 +15,7 @@ CREATE OR REPLACE PROCEDURE getNewsFeed(IN user1 INTEGER)
                 OR areFriends(user1, poster) = 1
                 ORDER BY postDate DESC
                 FETCH FIRST 100 ROWS ONLY;
+        
+        OPEN cur;
 
     END@
