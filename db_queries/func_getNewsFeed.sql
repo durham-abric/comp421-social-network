@@ -18,7 +18,8 @@ CREATE OR REPLACE FUNCTION getNewsFeed(user1 INTEGER)
                                FROM   TABLE(getNewsFeedLikes(user1)) AS l
                                WHERE  pID = l.pID)
               OR        areFriends(user1, poster) = 1
-              GROUP BY  pID
+              GROUP BY  pID,
+                        postDate
               ORDER BY  postDate DESC
               LIMIT     numPosts;
     END@
