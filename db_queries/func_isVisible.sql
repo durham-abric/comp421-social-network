@@ -9,10 +9,10 @@ CREATE OR REPLACE FUNCTION isPostVisible( user1 INTEGER,
       DECLARE visible INTEGER;
 
 
-      SELECT  (CASE po.privacy
-                  WHEN po.privacy LIKE 'private' THEN 0
-                  WHEN po.privacy LIKE 'public'  THEN 1
-                  WHEN po.privacy LIKE 'friends' THEN areFriends(user1, p.poster)
+      SELECT  (CASE
+                  WHEN po.privacy = 'private' THEN 0
+                  WHEN po.privacy = 'public'  THEN 1
+                  WHEN po.privacy = 'friends' THEN areFriends(user1, p.poster)
                   ELSE -1
               END CASE) AS visibility
       FROM Post AS p
