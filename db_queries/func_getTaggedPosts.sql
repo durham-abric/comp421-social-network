@@ -16,6 +16,6 @@ CREATE OR REPLACE FUNCTION  getTaggedPosts( user1 INTEGER,
                                     FROM    ContainsTag 
                                     WHERE   post = pID 
                                     AND     tag = tag1) 
-                AND         isVisible(user1, pID)
+                AND         isVisible(user1, pID) = 1
                 ORDER BY    postDate DESC;
     END@
