@@ -20,5 +20,5 @@ CREATE OR REPLACE FUNCTION getNewsFeed(user1 INTEGER,
                                WHERE  pID = l.pID)
               OR        areFriends(user1, poster) = 1
               ORDER BY  postDate DESC
-              LIMIT     numPosts;
+              FETCH FIRST numPosts ROWS ONLY;
     END@
