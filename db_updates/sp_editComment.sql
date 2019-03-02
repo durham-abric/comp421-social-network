@@ -1,4 +1,4 @@
-CREATE OR REPLACE PROCEDURE editComment(IN user1 INTEGER.
+CREATE OR REPLACE PROCEDURE editComment(IN user1 INTEGER,
                                         IN commentID INTEGER,
                                         IN newMessage VARCHAR(200))
     LANGUAGE SQL
