@@ -50,7 +50,7 @@ CommentPost = {}
 HashTagList = ["HashTag1", "HashTag2", "HashTag3", "HashTag4", "HashTag5"]
 
 for l in HashTagList:
-    print("INSERT INTO Tag VALUES('"+ l +"');")
+    print("INSERT INTO Tag VALUES('"+ l +"'T);")
 
 print()
 
