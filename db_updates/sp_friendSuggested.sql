@@ -1,5 +1,4 @@
-CREATE OR REPLACE PROCEDURE friendSuggested(IN user1 INTEGER,
-                                            IN top INTEGER)
+CREATE OR REPLACE PROCEDURE friendTopSuggested(IN user1 INTEGER)
     LANGUAGE SQL
 
     BEGIN ATOMIC
