@@ -161,12 +161,11 @@ while(running == True):
     while(user is not None):
         print("Welcome to SocialNet, {0}!".format(user[1]))
         print_menu()
+        print(user)
         print("\nSocialNet Command Line Interface:\n")
         while(True):
             command = input("\t->  ")
             args = command.split()
-            print(args[0].lower())
-            print(args[0].lower() in available_commands)
             if(args[0].lower() in available_commands):
                 if(args[0].lower() == "view"):
                     uid_query = "SELECT * FROM User WHERE username = \'{0}\'".format(' '.join(args[1:]))
@@ -201,7 +200,6 @@ while(running == True):
                         print("Description: {0}".format(owner_res['DESCRIPTION']))
                     else:
                         print("You can't view that user's page (privacy settings).")
-                        break
 
                 elif(args[0].lower() == "friend"):
                     uid_query = "SELECT * FROM User WHERE username = \'{0}\'".format(' '.join(args[1:]))
@@ -213,18 +211,29 @@ while(running == True):
                         print("That user doesn't have an account on SocialNet...")
                         break
                     
-                    friend_qury = "VALUES(areFriends({0},{1}))".format(user[0])
+                    friend_query = "VALUES(areFriends({0},{1}))".format(user[0], friend_id)
                     friend_stmt = db2.exec_immediate(connection, friend_query)
                     friend_res = db2.fetch_tuple(friend_stmt)
                     if(friend_res[0] == 1):
-                        print("You are already friends with {0}".format(args[1]))
+                        print("You are already friends with {0}".format(args[1:]))
                     else:
-                        add_friend_query = "INSERT INTO Friends VALUES({0},{1},{2})".format(user[0],friend_id,today.strftime('%Y-%m-%d'))
+                        add_friend_query = "INSERT INTO Friends VALUES({0},{1},\'{2}\')".format(user[0],friend_id,today.strftime('%Y-%m-%d'))
                         add_friend_stmt = db2.exec_immediate(connection, add_friend_query)
-                        print("You are now friends with {0}".format(args[1]))
+                        print("You are now friends with {0}".format(args[1:]))
             
                 elif(args[0].lower() == "message"):
-                    uid_query = "SELECT * FROM User WHERE username = \'{0}\'".format(' '.join(args[1:]))
+
+                    msg_start = -1
+                    for i in range(1,len(args)):
+                        if (args[i] == '-m'):
+                            msg_start = i
+                            break
+                    
+                    if(msg_start == -1):
+                        print("Invalid message format... Message User -m Message Goes Here")
+                        break
+
+                    uid_query = "SELECT * FROM User WHERE username = \'{0}\'".format(' '.join(args[1:msg_start]))
                     uid_stmt = db2.exec_immediate(connection, uid_query)
                     uid_res = db2.fetch_assoc(uid_stmt)
                     if(uid_res != False):
@@ -232,15 +241,9 @@ while(running == True):
                     else:
                         print("That user doesn't have an account on SocialNet...")
                         break
-                    
-                    msg_start = 0
-                    for(word in args[1:]):
-                        msg_start = msg_start + 1
-                        if (word == '-m'):
-                            break
 
                     msgID = random.randint(0, 2 ** 30)
-                    msg_query = "INSERT INTO PrivateMessage(pmID,message,sender,receiver,dateSent) VALUES({0},\'{1}\',{2},{3},\'{4}-12.00.00.000000\')".format(msgID,args[msg_start:],user0],user_id,today.strftime("'%Y-%m-%d"))
+                    msg_query = "INSERT INTO PrivateMessage(pmID,message,sender,receiver,dateSent) VALUES({0},\'{1}\',{2},{3},\'{4}-12.00.00.000000\')".format(msgID,' '.join(args[msg_start:]),user[0],user_id,today.strftime("'%Y-%m-%d"))
                     msg_stmt = db2.exec_immediate(connection, msg_query)
                     print("Message sent!")
                 elif(args[0].lower() == "newsfeed"):
